@@ -1,4 +1,4 @@
-﻿namespace ChessConsole.Board
+﻿namespace board
 {
     public class Board
     {
@@ -11,6 +11,11 @@
             Lines = lines;
             Columns = columns;
             Pieces = new Piece[lines, columns];
+        }
+
+        public Piece piece(int line, int column)
+        {
+            return Pieces[line, column];
         }
     }
 }

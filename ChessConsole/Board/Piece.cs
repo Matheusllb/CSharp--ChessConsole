@@ -1,6 +1,4 @@
-﻿using Board;
-
-namespace ChessConsole.Board
+﻿namespace board
 {
     public class Piece
     {

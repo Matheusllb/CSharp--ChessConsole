@@ -1,4 +1,4 @@
-﻿namespace Board
+﻿namespace board
 {
     public class Position
     {
