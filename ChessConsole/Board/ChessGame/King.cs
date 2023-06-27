@@ -20,7 +20,7 @@ namespace ChessGame
             return p == null || p.Color != this.Color;
         }
 
-        override public abstract bool[,] PossibleMoves()
+        public override bool[,] PossibleMoves()
         {
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
 

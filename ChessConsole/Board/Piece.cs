@@ -19,5 +19,7 @@
         {
             Moves++;
         }
+
+        public abstract bool[,] PossibleMoves();
     }
 }
