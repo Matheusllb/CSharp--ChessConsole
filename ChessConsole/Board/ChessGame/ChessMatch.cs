@@ -5,8 +5,8 @@ namespace ChessGame
     public class ChessMatch
     {
         public Board Board { get; private set; }
-        private int Turn;
-        private Color ActualPlayer;
+        public int Turn { get; private set; }
+        public Color ActualPlayer { get; private set; }
         public bool Finished { get; private set; }
 
         public ChessMatch()
@@ -23,7 +23,59 @@ namespace ChessGame
             p.IncrementsMoves();
             Piece capturedPiece = Board.RemovePiece(destination);
             Board.AddPiece(p, destination);
-            
+
+        }
+
+        public void PerformPlay(Position origin, Position destination)
+        {
+            ExecuteMoviment(origin, destination);
+            Turn++;
+            ChangePlayer();
+        }
+
+        public void ChangePlayer()
+        {
+            if (ActualPlayer == Color.White)
+            {
+                ActualPlayer = Color.Black;
+            }
+            else
+            {
+                ActualPlayer = Color.White;
+            }
+        }
+
+        public string TranslateColor(Color color)
+        {
+            switch (color)
+            {
+                case Color.White:
+                    return "Branco";
+                case Color.Black:
+                    return "Preto";
+                default:
+                    return color.ToString();
+            }
+        }
+
+        public void CheckOriginPosition(Position pos)
+        {
+            if(Board.piece(pos) == null)
+            {
+                throw new BoardException("Não existe peça na posição escolhida!");
+            }
+            if(ActualPlayer != Board.piece(pos).Color)
+            {
+                throw new BoardException("Você não pode mover a peça do oponente!");
+            }
+            if (!Board.piece(pos).ExistPossibleMoves())
+            {
+                throw new BoardException("A peça escolhida não pode ser movida");
+            }
+        }
+        public void CheckDestinationPosition(Position pos)
+        {
+
         }
 
         private void PutPieces()
@@ -65,3 +117,4 @@ namespace ChessGame
         }
     }
 }
+

@@ -14,22 +14,32 @@ namespace ChessConsole
 
                 while (!match.Finished)
                 {
-                    Console.Clear();
-                    Screen.PrintScreen(match.Board);
+                    try
+                    {
+                        Console.Clear();
+                        Screen.PrintScreen(match.Board);
+                        Console.WriteLine();
+                        Console.Write("Turno: " + match.Turn);
+                        Console.Write("Aguardando jogada: " + match.TranslateColor(match.ActualPlayer));
+                        Console.WriteLine();
+                        Console.Write("Origem: "); //Origin
+                        Position origin = Screen.ReadChessPosition().ToPosition();
+                        match.CheckOriginPosition(origin);
 
-                    Console.WriteLine();
-                    Console.Write("Origem: "); //Origin
-                    Position origin = Screen.ReadChessPosition().ToPosition();
+                        Console.Clear();
 
-                    Console.Clear();
+                        bool[,] possiblePositions = match.Board.piece(origin).PossibleMoves();
+                        Screen.PrintScreen(match.Board, possiblePositions);
 
-                    bool[,] possiblePositions = match.Board.piece(origin).PossibleMoves();
-                    Screen.PrintScreen(match.Board, possiblePositions);
+                        Console.Write("Destino: "); //Destination
+                        Position destination = Screen.ReadChessPosition().ToPosition();
 
-                    Console.Write("Destino: "); //Destination
-                    Position destination = Screen.ReadChessPosition().ToPosition();
-
-                    match.ExecuteMoviment(origin, destination);
+                        match.ExecuteMoviment(origin, destination);
+                    }catch (BoardException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
 
             }
