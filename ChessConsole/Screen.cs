@@ -5,6 +5,15 @@ namespace ChessConsole
 {
     public class Screen
     {
+        public static void PrintMatch(ChessMatch match)
+        {
+            PrintScreen(match.Board);
+            Console.WriteLine();
+            PrintCapturedPieces(match);
+            Console.WriteLine();
+            Console.WriteLine("Turno: " + match.Turn);
+            Console.Write("Aguardando jogada: " + match.TranslateColor(match.ActualPlayer));
+        }
         public static void PrintScreen(Board board)
         {
             for(int i = 0; i < board.Lines; i++)
@@ -71,6 +80,25 @@ namespace ChessConsole
             }
         }
 
+        public static void PrintCapturedPieces(ChessMatch match)
+        {
+            Console.WriteLine("Peças Capturadas:");
+            Console.Write("Brancas: ");
+            PrintHashSet(match.CapturedPieces(Color.White));
+            Console.WriteLine();
+            Console.Write("Pretas: ");
+            PrintHashSet(match.CapturedPieces(Color.Black));
+        }
+
+        public static void PrintHashSet(HashSet<Piece> set)
+        {
+            Console.Write("[");
+            foreach(Piece x in set)
+            {
+                Console.Write(x + " ");
+            }
+            Console.Write("]");
+        }
         public static ChessPosition ReadChessPosition()
         {
             string s = Console.ReadLine();
