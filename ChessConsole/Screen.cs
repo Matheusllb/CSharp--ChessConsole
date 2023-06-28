@@ -13,6 +13,10 @@ namespace ChessConsole
             Console.WriteLine();
             Console.WriteLine("Turno: " + match.Turn);
             Console.Write("Aguardando jogada: " + match.TranslateColor(match.ActualPlayer));
+            if (match.Check == true)
+            {
+                Console.WriteLine("XEQUE!");
+            }
         }
         public static void PrintScreen(Board board)
         {
@@ -87,7 +91,11 @@ namespace ChessConsole
             PrintHashSet(match.CapturedPieces(Color.White));
             Console.WriteLine();
             Console.Write("Pretas: ");
+            ConsoleColor aux = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
             PrintHashSet(match.CapturedPieces(Color.Black));
+            Console.ForegroundColor = aux;
+            Console.WriteLine();
         }
 
         public static void PrintHashSet(HashSet<Piece> set)
