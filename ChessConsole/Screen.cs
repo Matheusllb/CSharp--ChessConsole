@@ -12,10 +12,18 @@ namespace ChessConsole
             PrintCapturedPieces(match);
             Console.WriteLine();
             Console.WriteLine("Turno: " + match.Turn);
-            Console.Write("Aguardando jogada: " + match.TranslateColor(match.ActualPlayer));
-            if (match.Check == true)
+            if (!match.Finished)
             {
-                Console.WriteLine("XEQUE!");
+                Console.Write("Aguardando jogada: " + match.TranslateColor(match.ActualPlayer));
+                if (match.Check == true)
+                {
+                    Console.WriteLine("XEQUE!");
+                }
+            }
+            else
+            {
+                Console.WriteLine("XAQUE-MATE!");
+                Console.Write("Vencedor: " + match.ActualPlayer);
             }
         }
         public static void PrintScreen(Board board)
