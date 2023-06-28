@@ -24,10 +24,20 @@ namespace ChessGame
         {
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
 
-            Position pos = new Position(0, 0);
+            // North East
+            Position pos = new Position(Position.Line - 1, Position.Column + 1);
+            while (Board.ValidPosition(pos) && CanMove(pos))
+            {
+                matrix[pos.Line, pos.Column] = true;
+                if (Board.piece(pos) != null && Board.piece(pos).Color != this.Color)
+                {
+                    break;
+                }
+                pos.DefineValues(pos.Line - 1, pos.Column + 1);
+            }
 
-            //North East
-            pos.DefineValues(pos.Line - 1, pos.Column + 1);
+            // Southeast
+            pos = new Position(Position.Line + 1, Position.Column + 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 matrix[pos.Line, pos.Column] = true;
@@ -35,11 +45,11 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line - 1;
-                pos.Column = pos.Column + 1;
+                pos.DefineValues(pos.Line + 1, pos.Column + 1);
             }
-            //Southeast
-            pos.DefineValues(pos.Line + 1, pos.Column + 1);
+
+            // South-West
+            pos = new Position(Position.Line + 1, Position.Column - 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 matrix[pos.Line, pos.Column] = true;
@@ -47,11 +57,11 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line + 1;
-                pos.Column = pos.Column + 1;
+                pos.DefineValues(pos.Line + 1, pos.Column - 1);
             }
-            //South-West
-            pos.DefineValues(pos.Line + 1, pos.Column - 1);
+
+            // Northwest
+            pos = new Position(Position.Line - 1, Position.Column - 1);
             while (Board.ValidPosition(pos) && CanMove(pos))
             {
                 matrix[pos.Line, pos.Column] = true;
@@ -59,20 +69,7 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line + 1;
-                pos.Column = pos.Column - 1;
-            }
-            //Northwest
-            pos.DefineValues(pos.Line - 1, pos.Column - 1);
-            while (Board.ValidPosition(pos) && CanMove(pos))
-            {
-                matrix[pos.Line, pos.Column] = true;
-                if (Board.piece(pos) != null && Board.piece(pos).Color != this.Color)
-                {
-                    break;
-                }
-                pos.Line = pos.Line - 1;
-                pos.Column = pos.Column - 1;
+                pos.DefineValues(pos.Line - 1, pos.Column - 1);
             }
 
             return matrix;

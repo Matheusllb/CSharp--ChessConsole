@@ -24,7 +24,7 @@ namespace ChessGame
         {
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
 
-            Position pos = new Position(0, 0);
+            Position pos = new Position(Position.Line, Position.Column);
 
             //up
             pos.DefineValues(pos.Line - 1, pos.Column);
@@ -35,7 +35,7 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line + 1;
+                pos.Line = pos.Line - 1;
             }
             //Down
             pos.DefineValues(pos.Line + 1, pos.Column);
@@ -79,8 +79,8 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line - 1;
-                pos.Column = pos.Column + 1;
+                pos.DefineValues(pos.Line -= 1, pos.Column += 1);
+
             }
             //Southeast
             pos.DefineValues(pos.Line + 1, pos.Column + 1);
@@ -91,8 +91,8 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line + 1;
-                pos.Column = pos.Column + 1;
+                pos.DefineValues(pos.Line += 1, pos.Column += 1);
+
             }
             //South-West
             pos.DefineValues(pos.Line + 1, pos.Column - 1);
@@ -103,8 +103,8 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line + 1;
-                pos.Column = pos.Column - 1;
+                pos.DefineValues(pos.Line += 1, pos.Column -= 1);
+
             }
             //Northwest
             pos.DefineValues(pos.Line - 1, pos.Column - 1);
@@ -115,8 +115,8 @@ namespace ChessGame
                 {
                     break;
                 }
-                pos.Line = pos.Line - 1;
-                pos.Column = pos.Column - 1;
+                pos.DefineValues(pos.Line -= 1, pos.Column -= 1);
+
             }
 
             return matrix;

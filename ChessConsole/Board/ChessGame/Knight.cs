@@ -24,7 +24,7 @@ namespace ChessGame
         {
             bool[,] matrix = new bool[Board.Lines, Board.Columns];
 
-            Position pos = new Position(0, 0);
+            Position pos = new Position(Position.Line, Position.Column);
 
             //RightUpOne
             pos.DefineValues(Position.Line - 2, Position.Column + 1);

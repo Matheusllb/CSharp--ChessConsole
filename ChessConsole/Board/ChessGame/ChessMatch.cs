@@ -35,7 +35,7 @@ namespace ChessGame
             {
                 Captured.Add(capturedPiece);
             }
-            return p;
+            return capturedPiece;
         }
 
         public void UndoMoviment(Position origin, Position des, Piece capturedPiece)
@@ -170,7 +170,7 @@ namespace ChessGame
             }
         }
 
-        /*private Piece King(Color color)
+        private Piece King(Color color)
         {
             foreach(Piece x in PiecesInGame(color))
             {
@@ -180,12 +180,12 @@ namespace ChessGame
                 }
             }
             return null;
-        }*/
+        }
 
         public bool InCheck(Color color)
         {
-            /*Piece r = King(color);
-            if (r == null)
+            Piece r = King(color);
+            /*if (r == null)
             {
                 throw new BoardException("Não tem Rei da cor " + TranslateColor(color) + " presente no tabuleiro!");
             }*/

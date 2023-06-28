@@ -31,7 +31,7 @@
             {
                 for(int j = 0; j < Board.Columns; j++)
                 {
-                    if (matrix[i,j] == true)
+                    if (matrix[i,j])
                     {
                         return true;
                     }
