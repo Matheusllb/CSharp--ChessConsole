@@ -17,10 +17,8 @@ namespace ChessConsole
                     try
                     {
                         Console.Clear();
-                        Screen.PrintScreen(match.Board);
-                        Console.WriteLine();
-                        Console.Write("Turno: " + match.Turn);
-                        Console.Write("Aguardando jogada: " + match.TranslateColor(match.ActualPlayer));
+                        Screen.PrintMatch(match);
+
                         Console.WriteLine();
                         Console.Write("Origem: "); //Origin
                         Position origin = Screen.ReadChessPosition().ToPosition();
@@ -33,8 +31,10 @@ namespace ChessConsole
 
                         Console.Write("Destino: "); //Destination
                         Position destination = Screen.ReadChessPosition().ToPosition();
+                        match.CheckDestinationPosition(origin, destination);
 
-                        match.ExecuteMoviment(origin, destination);
+
+                        match.PerformPlay(origin, destination);
                     }catch (BoardException e)
                     {
                         Console.WriteLine(e.Message);

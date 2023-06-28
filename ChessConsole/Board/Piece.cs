@@ -19,6 +19,10 @@
         {
             Moves++;
         }
+        public void DecrementsMoves()
+        {
+            Moves--;
+        }
 
         public bool ExistPossibleMoves()
         {
@@ -34,6 +38,11 @@
                 }
             }
             return false;
+        }
+
+        public bool PossibleMoviment(Position pos)
+        {
+            return PossibleMoves()[pos.Line, pos.Column];
         }
 
         public abstract bool[,] PossibleMoves();

@@ -10,6 +10,7 @@ namespace ChessGame
         public bool Finished { get; private set; }
         private HashSet<Piece> Pieces;
         private HashSet<Piece> Captured;
+        public bool Check { get; private set; }
 
 
         public ChessMatch()
@@ -17,6 +18,10 @@ namespace ChessGame
             Board = new Board(8, 8);
             Turn = 1;
             ActualPlayer = Color.White;
+            Finished = false;
+            Check = false;
+            Pieces = new HashSet<Piece>();
+            Captured = new HashSet<Piece>();
             PutPieces();
         }
 
@@ -54,9 +59,23 @@ namespace ChessGame
                 UndoMoviment(origin, destination, capturedPiece);
                 throw new BoardException("Você não pode se colocar em Xeque!");
             }
-
-            Turn++;
-            ChangePlayer();
+            if (InCheck(Adversary(ActualPlayer)))
+            {
+                Check = true;
+            }
+            else
+            {
+                Check = false;
+            }
+            if (CheckMate(Adversary(ActualPlayer)))
+            {
+                Finished = true;
+            }
+            else
+            {
+                Turn++;
+                ChangePlayer();
+            }
         }
 
         public void ChangePlayer()
@@ -101,7 +120,7 @@ namespace ChessGame
         }
         public void CheckDestinationPosition(Position origin, Position des)
         {
-            if (!Board.piece(origin).CanMoveTo(des))
+            if (!Board.piece(origin).PossibleMoviment(des))
             {
                 throw new BoardException("Posição de destino inválida!");
             }
@@ -151,7 +170,7 @@ namespace ChessGame
             }
         }
 
-        private Piece King(Color color)
+        /*private Piece King(Color color)
         {
             foreach(Piece x in PiecesInGame(color))
             {
@@ -161,15 +180,15 @@ namespace ChessGame
                 }
             }
             return null;
-        }
+        }*/
 
         public bool InCheck(Color color)
         {
-            Piece r = King(color);
-            if(r == null)
+            /*Piece r = King(color);
+            if (r == null)
             {
-                throw new BoardException("Não tem Rei da cor " + color + " presente no tabuleiro!");
-            }
+                throw new BoardException("Não tem Rei da cor " + TranslateColor(color) + " presente no tabuleiro!");
+            }*/
 
             foreach(Piece x in PiecesInGame(Adversary(color)))
             {
@@ -180,6 +199,40 @@ namespace ChessGame
                 }
             }
             return false;
+        }
+
+        public bool CheckMate(Color color)
+        {
+            if (!InCheck(color))
+            {
+                return false;
+            }
+            else
+            {
+                foreach(Piece x in PiecesInGame(color))
+                {
+                    bool[,] mat = x.PossibleMoves();
+                    for(int i = 0; i < Board.Lines; i++)
+                    {
+                        for(int j = 0; j < Board.Columns; j++)
+                        {
+                            if (mat[i, j])
+                            {
+                                Position origin = x.Position;
+                                Position destination = new Position(i, j);
+                                Piece capturedPiece = ExecuteMoviment(origin, destination);
+                                bool checkTest = InCheck(color);
+                                UndoMoviment(origin, destination, capturedPiece);
+                                if (!checkTest) 
+                                {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
         }
 
         private void PutPieces()

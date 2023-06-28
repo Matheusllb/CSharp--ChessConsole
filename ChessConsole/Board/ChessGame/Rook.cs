@@ -8,15 +8,16 @@ namespace ChessGame
         {
 
         }
-        private bool CanMove(Position pos)
-        {
-            Piece p = Board.piece(pos);
-            return p == null || p.Color != this.Color;
-        }
 
         public override string ToString()
         {
             return "T"; // Rook = Torre
+        }
+
+        private bool CanMove(Position pos)
+        {
+            Piece p = Board.piece(pos);
+            return p == null || p.Color != this.Color;
         }
 
         public override bool[,] PossibleMoves()

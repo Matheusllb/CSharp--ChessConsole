@@ -23,12 +23,14 @@ namespace ChessConsole
             else
             {
                 Console.WriteLine("XAQUE-MATE!");
-                Console.Write("Vencedor: " + match.ActualPlayer);
+                Console.Write("Vencedor: " + match.TranslateColor(match.ActualPlayer));
             }
         }
         public static void PrintScreen(Board board)
         {
-            for(int i = 0; i < board.Lines; i++)
+            Console.WriteLine("     a  b  c  d  e  f  g  h");
+            Console.WriteLine("   ------------------------"); 
+            for (int i = 0; i < board.Lines; i++)
             {
                 Console.Write(8 - i + " |  ");
                 for (int j = 0; j < board.Columns; j++)
@@ -45,7 +47,8 @@ namespace ChessConsole
         {
             ConsoleColor originalBackground = Console.BackgroundColor;
             ConsoleColor alteredBackground = ConsoleColor.DarkGray;
-
+            Console.WriteLine("     a  b  c  d  e  f  g  h");
+            Console.WriteLine("   ------------------------");
             for (int i = 0; i < board.Lines; i++)
             {
                 Console.Write(8 - i + " |  ");
