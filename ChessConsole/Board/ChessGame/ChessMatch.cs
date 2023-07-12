@@ -92,14 +92,13 @@ namespace ChessGame
 
         public string TranslateColor(Color color)
         {
-            switch (color)
+            if (color == Color.White)
             {
-                case Color.White:
-                    return "Branco";
-                case Color.Black:
-                    return "Preto";
-                default:
-                    return color.ToString();
+                return "Branco";
+            }
+            else 
+            {
+                return "Preto";
             }
         }
 
@@ -187,7 +186,7 @@ namespace ChessGame
             Piece r = King(color);
             /*if (r == null)
             {
-                throw new BoardException("Não tem Rei da cor " + TranslateColor(color) + " presente no tabuleiro!");
+                throw new BoardException("Não existe Rei " + TranslateColor(color) + " no tabuleiro!");
             }*/
 
             foreach(Piece x in PiecesInGame(Adversary(color)))
